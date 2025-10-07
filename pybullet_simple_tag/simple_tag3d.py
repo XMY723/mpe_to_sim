@@ -349,7 +349,10 @@ class SimpleTag3DBulletEnv:
         Dict[str, Dict[str, float]],
     ]:
         if not self.agents:
-            raise RuntimeError("step() called after all agents are done.")
+            # Mirror PettingZoo's parallel API behaviour by returning empty mappings
+            # once the environment has finished instead of raising.  This makes it
+            # safe to continue looping until `env.agents` reports no active agents.
+            return {}, {}, {}, {}, {}
         for agent in self.world.agents:
             action = actions.get(agent.name, 0)
             velocity = self._action_to_velocity(action, agent)

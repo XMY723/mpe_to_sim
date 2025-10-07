@@ -34,6 +34,10 @@ for _ in range(50):
 env.close()
 ```
 
+After all agents are finished (for example, when `max_cycles` is reached),
+`env.agents` becomes empty and subsequent calls to `env.step()` will return
+empty dictionaries so the loop can exit cleanly.
+
 ### Sampling actions
 
 The environment expects discrete integer actions in the range `[0, 4]` for each agent:
