@@ -6,7 +6,7 @@ The project mirrors the structure of the original 2D environment while extending
 
 ## Environment features
 
-* **Agents** – configurable number of adversaries (red) and a good agent (green) that move freely in 3D space.
+* **Agents** – configurable number of adversaries (red) and a good agent (green) that move freely across the arena.
 * **Obstacles** – immovable dark landmarks that obstruct motion.
 * **PyBullet simulation** – all bodies are simulated inside PyBullet with optional GUI-based rendering.
 * **PettingZoo-inspired API** – the `SimpleTag3DBulletEnv` class exposes `reset()` and `step()` functions returning dictionaries of observations, rewards, terminations, truncations, and infos for each agent. A convenience `make_env()` helper mirrors the PettingZoo factory style.
@@ -36,7 +36,7 @@ env.close()
 
 ### Sampling actions
 
-The environment expects discrete integer actions in the range `[0, 6]` for each agent:
+The environment expects discrete integer actions in the range `[0, 4]` for each agent:
 
 | Action | Effect             |
 |--------|--------------------|
@@ -45,8 +45,6 @@ The environment expects discrete integer actions in the range `[0, 6]` for each 
 | 2      | Move right (+X)    |
 | 3      | Move backward (-Y) |
 | 4      | Move forward (+Y)  |
-| 5      | Move down (-Z)     |
-| 6      | Move up (+Z)       |
 
 `SimpleTag3DBulletEnv` provides helpers `action_space_sample()` (single action) and `sample_actions()` (dictionary for every active agent) implemented via `numpy.random.Generator.integers`.
 

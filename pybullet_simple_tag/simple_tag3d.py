@@ -60,7 +60,7 @@ class BulletWorld:
             return
         self.client = p.connect(p.GUI if self.gui else p.DIRECT)
         p.resetSimulation(physicsClientId=self.client)
-        p.setGravity(0.0, 0.0, 0.0, physicsClientId=self.client)
+        p.setGravity(0.0, 0.0, -9.81, physicsClientId=self.client)
         p.setTimeStep(self.time_step, physicsClientId=self.client)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self.plane_id = p.loadURDF("plane.urdf", physicsClientId=self.client)
@@ -76,7 +76,7 @@ class BulletWorld:
         if self.client is None:
             raise RuntimeError("BulletWorld.reset() called before connect().")
         p.resetSimulation(physicsClientId=self.client)
-        p.setGravity(0.0, 0.0, 0.0, physicsClientId=self.client)
+        p.setGravity(0.0, 0.0, -9.81, physicsClientId=self.client)
         p.setTimeStep(self.time_step, physicsClientId=self.client)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self.plane_id = p.loadURDF("plane.urdf", physicsClientId=self.client)
@@ -334,8 +334,6 @@ class SimpleTag3DBulletEnv:
             2: np.array([1.0, 0.0, 0.0], dtype=np.float32),
             3: np.array([0.0, -1.0, 0.0], dtype=np.float32),
             4: np.array([0.0, 1.0, 0.0], dtype=np.float32),
-            5: np.array([0.0, 0.0, -1.0], dtype=np.float32),
-            6: np.array([0.0, 0.0, 1.0], dtype=np.float32),
         }
         vec = directions.get(int(action), np.zeros(3, dtype=np.float32))
         speed = agent.max_speed
@@ -372,7 +370,7 @@ class SimpleTag3DBulletEnv:
     def action_space_sample(self) -> int:
         """Returns a uniformly sampled discrete action in the valid range."""
 
-        return int(self._rng.integers(0, 7))
+        return int(self._rng.integers(0, 5))
 
     def sample_actions(self) -> Dict[str, int]:
         """Convenience helper that samples an action for every active agent."""
